@@ -32,3 +32,17 @@ dynamic_schema = [
 ]
 
 pp Write.call(data_path, dynamic_schema, scan_rule)
+
+
+data = File.read data_path
+elements = data.scan(scan_rule).flatten.each
+
+init = {
+  cnt1: 0,
+  cnt2: 0
+}
+
+elements.each_with_object({}) do |str, hash|
+  hash[:cnt1] = hash[:cnt1] + str.size
+  hash[:cnt2] = hash[:cnt1] + 1
+end
