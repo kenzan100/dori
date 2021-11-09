@@ -32,10 +32,12 @@ Data processing/intensive applications benefit (scale better) if it’s designed
 Unidirectional flow of constants inserts
 
 Models:
+```
  A -> B -> C -> D
      -> E ->
                     -> G
      -> F ->
+```
 
 ——
 Who’s audience
