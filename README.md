@@ -10,14 +10,14 @@ ActiveJob, Sidekiq, but that’s about it
 ——
 Killer apps
 
-Web crawler?
-Automation (IFTTT, on web apps)
-Data aggregation 
-Google Trends
-Blogosphere
-NomadList, Stats reporting
-CryptoTracker (Stonk aggregator, “Text me when some of these stones gets above/below threshold)
-Trading strategies (when X is a, Y is b, sell/buy Z stock) HFT 
+- Web crawler?
+- Automation (IFTTT, on web apps)
+- Data aggregation 
+- Google Trends
+- Blogosphere
+- NomadList, Stats reporting
+- CryptoTracker (Stonk aggregator, “Text me when some of these stones gets above/below threshold)
+- Trading strategies (when X is a, Y is b, sell/buy Z stock) HFT 
 
 Implementing in Rails first
 And see how much of a “pattern” we could be discovering that’s not being addressed by Rails
