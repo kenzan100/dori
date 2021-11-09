@@ -34,9 +34,9 @@ Unidirectional flow of constants inserts
 Models:
 ```
  A -> B -> C -> D
-     -> E ->
-                    -> G
-     -> F ->
+     -> E --|
+            |-> G
+     -> F --|
 ```
 
 ——
@@ -60,41 +60,43 @@ Mental models
 External-(explicit mapping)->A->B->C
 
 In the end, here’s what I want (in terms of JSON schema)
+```
 [
   {
      city_name: “Nagano”,
      max_tempature: Integer(),
   }
 ]
+```
 
 ——
 
 Code example
 
 They need following “config files” (hopefully config files are so simple that you can one-liner it?)
-Final destination JSON schema (data end-product)
-DAG
+1. Final destination JSON schema (data end-product)
+2. DAG
+```
     A(city, temperature) ->
                                               -> C(sorted comfortable rank by cities))
     B(city, raining rate) -> 
-Run Scaffolding command
-For A, B, and C, you would have to fill in A (API key, …), B(local file storage path, ….)
-Access localhost:8000/data.json
+```
+3. Run Scaffolding command
+4. For A, B, and C, you would have to fill in A (API key, …), B(local file storage path, ….)
+5. Access localhost:8000/data.json
 
 It’s also defined by what it doesn’t provide
 INSERT
 DESTROY
 
-
-
 ——
 
 What’s already out there
 
-Spark pipelines
-https://ballerina.io/
-https://github.com/alphagov/content-data-api
-https://github.com/spotify/luigi
+- Spark pipelines
+- https://ballerina.io/
+- https://github.com/alphagov/content-data-api
+- https://github.com/spotify/luigi
 
 
 
@@ -120,6 +122,7 @@ Datasources
 
  MrrIntervals -> JSON/GraphQL (final destination)
 
+```
 class Stripe < ????
   def connect
     ???
@@ -134,6 +137,8 @@ Given Stirpe -> CustomerMRRReading
     }
   end
 end
+```
+
 
  —
 
