@@ -67,59 +67,57 @@ class Dori::Application
       reader1
     )
 
-    dynamic_schema = [
-      {
-        rent_average: -> () { |elem, acc| acc + (elem/acc.len) },
-        net_speed:    -> () { |elem, acc| acc + (elem/acc.len) },
-      }
-    ]
+    # dynamic_schema = [
+    #   {
+    #     rent_average: -> { |elem, acc| acc + (elem/acc.len) },
+    #     net_speed:    -> { |elem, acc| acc + (elem/acc.len) },
+    #   }
+    # ]
 
     proc = -> (str, acc) { acc + 1 }
 
     enum = [1, 2, 3].each
-
-    class Write
-      def self.call(data_path, dynamic_schema, scan_rule)
-        data = File.read data_path
-        elements = data.scan(scan_rule).to_enum
-
-        memo = dynamic_schema.last
-        elements.size.times do
-          enum_val = elements.next
-
-          dynamic_schema.first.each do |k, procs|
-            proc = procs.first
-            default = procs.last
-            memo[k] = proc.call(enum_val, memo[k] || default)
-          end
-        end
-
-        memo
-      end
-    end
-
-    scan_rule = /style=(.+)>/
-    data_path = 'chintai_dump.xml'
-    dynamic_schema = [
-      {
-        cnt1: [-> (val, acc) { acc + 1 }, 0],
-        cnt2: [-> (val, acc) { acc + 1 }, 0],
-      },
-      {} # default
-    ]
-
-    Write.call(data_path, dynamic_schema, scan_rule)
-
-    Read.new(
-      key: [:id, :timestamp],
-      InitialLoad
-      WebhookSync
-    )
-
-    Map.new()
-    Reduce.new()
-    Filter.new()
-
-
   end
+
+  class Write
+    def self.call(data_path, dynamic_schema, scan_rule)
+      data = File.read data_path
+      elements = data.scan(scan_rule).to_enum
+
+      memo = dynamic_schema.last
+      elements.size.times do
+        enum_val = elements.next
+
+        dynamic_schema.first.each do |k, procs|
+          proc = procs.first
+          default = procs.last
+          memo[k] = proc.call(enum_val, memo[k] || default)
+        end
+      end
+
+      memo
+    end
+  end
+
+  scan_rule = /style=(.+)>/
+  data_path = 'chintai_dump.xml'
+  dynamic_schema = [
+    {
+      cnt1: [-> (val, acc) { acc + 1 }, 0],
+      cnt2: [-> (val, acc) { acc + 1 }, 0],
+    },
+    {} # default
+  ]
+
+  Write.call(data_path, dynamic_schema, scan_rule)
+
+  Read.new(
+    key: [:id, :timestamp]
+  )
+
+  Map.new()
+  Reduce.new()
+  Filter.new()
+
+
 end
